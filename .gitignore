@@ -27,6 +27,7 @@
 
 #clion
 .idea/
+cmake-build-debug/
 
 #other stuff (windows stuff, qt moc stuff, etc)
 Release_MD/
@@ -36,6 +37,10 @@ x64/
 ipch/
 GeneratedFiles/
 .moc/
+/UI/obs.rc
+.vscode/
+
+
 
 /other/
 
@@ -87,7 +92,6 @@ tags
 *.obj
 *.pdb
 *.res
-*.manifest
 *.dep
 *.zip
 *.lnk

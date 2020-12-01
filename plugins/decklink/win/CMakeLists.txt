@@ -7,6 +7,8 @@ endif()
 
 include(IDLFileHelper)
 
+include_directories(${CMAKE_SOURCE_DIR}/deps/libcaption)
+
 set(win-decklink-sdk_IDLS
 	decklink-sdk/DeckLinkAPI.idl
 	)
@@ -28,8 +30,12 @@ set(win-decklink_HEADERS
 	../decklink-device-mode.hpp
 	../audio-repack.h
 	../audio-repack.hpp
+	../util.hpp
+	../OBSVideoFrame.h
 	)
 
+set(MODULE_DESCRIPTION "OBS DeckLink Windows module")
+configure_file(${CMAKE_SOURCE_DIR}/cmake/winrc/obs-module.rc.in win-decklink.rc)
 set(win-decklink_SOURCES
 	../plugin-main.cpp
 	../decklink-devices.cpp
@@ -44,7 +50,9 @@ set(win-decklink_SOURCES
 	../decklink-device-mode.cpp
 	../audio-repack.c
 	platform.cpp
-	)
+	../util.cpp
+	win-decklink.rc
+	../OBSVideoFrame.cpp)
 
 add_idl_files(win-decklink-sdk_GENERATED_FILES
 	${win-decklink-sdk_IDLS}
@@ -52,6 +60,7 @@ add_idl_files(win-decklink-sdk_GENERATED_FILES
 
 include_directories(
 	${CMAKE_CURRENT_BINARY_DIR}
+	"${CMAKE_SOURCE_DIR}/UI/obs-frontend-api"
 )
 
 add_library(win-decklink MODULE
@@ -62,6 +71,9 @@ add_library(win-decklink MODULE
 	)
 
 target_link_libraries(win-decklink
-	libobs)
+	libobs
+	obs-frontend-api
+	caption)
+set_target_properties(win-decklink PROPERTIES FOLDER "plugins/decklink")
 
 install_obs_plugin_with_data(win-decklink ../data)

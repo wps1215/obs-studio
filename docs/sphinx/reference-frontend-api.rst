@@ -105,6 +105,10 @@ Structures/Enumerations
 
      Triggered when the replay buffer has fully stopped.
 
+   - **OBS_FRONTEND_EVENT_REPLAY_BUFFER_SAVED**
+
+     Triggered when the replay buffer has been saved.
+
    - **OBS_FRONTEND_EVENT_STUDIO_MODE_ENABLED**
 
      Triggered when the user has turned on studio mode.
@@ -123,6 +127,18 @@ Structures/Enumerations
      Triggered when a scene collection has been completely unloaded, and
      the program is either about to load a new scene collection, or the
      program is about to exit.
+
+   - **OBS_FRONTEND_EVENT_FINISHED_LOADING**
+
+     Triggered when the program has finished loading.
+
+   - **OBS_FRONTEND_EVENT_RECORDING_PAUSED**
+
+     Triggered when the recording has been paused.
+
+   - **OBS_FRONTEND_EVENT_RECORDING_UNPAUSED**
+
+     Triggered when the recording has been unpaused.
 
 .. type:: struct obs_frontend_source_list
 
@@ -232,6 +248,18 @@ Functions
 .. function:: void obs_frontend_set_current_transition(obs_source_t *transition)
 
    :param transition: The transition to set as the current transition.
+
+---------------------------------------
+
+.. function:: int obs_frontend_get_transition_duration(void)
+
+   :return: The transition duration (in milliseconds) currently set in the UI.
+
+---------------------------------------
+
+.. function:: void obs_frontend_set_transition_duration(int duration)
+
+   :param duration: Desired transition duration (in milliseconds)
 
 ---------------------------------------
 
@@ -390,6 +418,18 @@ Functions
 
 ---------------------------------------
 
+.. function:: void obs_frontend_recording_pause(bool pause)
+
+   :pause: *true* to pause recording, *false* to unpause.
+
+---------------------------------------
+
+.. function:: bool obs_frontend_recording_paused(void)
+
+   :return: *true* if recording paused, *false* otherwise.
+
+---------------------------------------
+
 .. function:: void obs_frontend_replay_buffer_start(void)
 
    Starts replay buffer.
@@ -473,6 +513,12 @@ Functions
 
 ---------------------------------------
 
+.. function:: void obs_frontend_preview_program_trigger_transition(void)
+
+   Triggers a preview-to-program transition if studio mode is active.
+
+---------------------------------------
+
 .. function:: obs_source_t *obs_frontend_get_current_preview_scene(void)
 
    :return: A new reference to the current preview scene if studio mode
@@ -487,3 +533,17 @@ Functions
    active scene if not in studio mode.
 
    :param scene: The scene to set as the current preview.
+
+---------------------------------------
+
+.. function:: void *obs_frontend_take_screenshot(void)
+
+   Takes a screenshot of the main OBS output.
+
+---------------------------------------
+
+.. function:: void *obs_frontend_take_source_screenshot(obs_source_t *source)
+
+   Takes a screenshot of the specified source.
+
+   :param source: The source to take screenshot of.
